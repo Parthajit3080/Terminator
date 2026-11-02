@@ -170,7 +170,7 @@ For WSL, ensure that an X11-compatible display server is available and that the 
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Terminator.git
+git clone https://github.com/Parthajit3080/Terminator.git
 ```
 
 Navigate to the project directory:
@@ -279,15 +279,17 @@ Execute it inside Terminator:
 
 ---
 
+
 ## 📁 Project Structure
 
 ```text
 Terminator/
 │
-├── terminator.c       # Main source code
-├── README.md          # Project documentation
-└── .terminatorrc      # Optional keyboard shortcut configuration
+├── Terminator/
+│   └── terminator.c    # Main C source code
+└── README.md           # Project documentation
 ```
+
 
 ---
 
@@ -338,11 +340,3 @@ The primary objectives of this project are:
 
 Computer Science and Engineering Undergraduate  
 Indian Institute of Technology (IIT) Kharagpur
-
----
-
-## 📄 License
-
-This project is intended for educational and academic purposes.
-
-Add an appropriate open-source license file if you intend to distribute the project under a specific license.
