@@ -87,7 +87,27 @@ The `tests/` directory contains manual command fixtures and instructions. Run th
 
 ## Screenshots
 
-The `screenshots/` directory includes a capture guide. Add real captures named `main-window.png`, `thread-mode.png`, `process-mode.png`, and `multiwatch.png` after launching the application in each state.
+The `screenshots/` directory contains screenshots demonstrating the implemented features of Terminator.
+
+### 1. Command History
+Demonstrates the command history functionality.
+
+![Command History](screenshots/history.jpeg)
+
+### 2. Listing Files and Directories
+Demonstrates execution of the `ls -l` command and display of file details.
+
+![LS Command](screenshots/ls%20-l.jpeg)
+
+### 3. MultiWatch
+Demonstrates the MultiWatch feature, which allows multiple commands to be monitored simultaneously.
+
+![MultiWatch](screenshots/multiWatch.jpeg)
+
+### 4. File Writing and Redirection
+Demonstrates writing command output into a file using output redirection.
+
+![Writing into a File](screenshots/writing%20into%20a%20file.jpeg)
 
 ## Project files
 
