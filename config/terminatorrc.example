@@ -1,0 +1,10 @@
+# Copy this file to ~/.terminatorrc to customize shortcuts.
+bind new-tab Control+Shift+T
+bind close-tab Control+Shift+W
+bind next-tab Control+Page_Down
+bind previous-tab Control+Page_Up
+bind copy Control+Shift+C
+bind paste Control+Shift+V
+bind search Control+r
+bind clear Control+l
+bind eof Control+d
