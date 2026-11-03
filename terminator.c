@@ -3087,6 +3087,8 @@ int main(int argc, char **argv) {
         fprintf(stderr, "terminator: cannot open X display; ensure X11 is available and DISPLAY is set\n");
         return 1;
     }
+
+
     screen = DefaultScreen(display);
     color_background = named_color("#0f1722", BlackPixel(display, screen));
     color_panel = named_color("#172332", BlackPixel(display, screen));
@@ -3100,6 +3102,8 @@ int main(int argc, char **argv) {
                                  (unsigned)window_width, (unsigned)window_height, 1,
                                  color_border, color_background);
     XStoreName(display, window, "Terminator");
+
+
     XSelectInput(display, window, ExposureMask | KeyPressMask | ButtonPressMask |
                  ButtonReleaseMask | PointerMotionMask | StructureNotifyMask);
     wm_delete_window = XInternAtom(display, "WM_DELETE_WINDOW", False);
@@ -3108,15 +3112,17 @@ int main(int argc, char **argv) {
     utf8_atom = XInternAtom(display, "UTF8_STRING", False);
     targets_atom = XInternAtom(display, "TARGETS", False);
     clipboard_property = XInternAtom(display, "TERMINATOR_CLIPBOARD", False);
+
+
     load_keybindings();
     gc = XCreateGC(display, window, 0, NULL);
     font = XLoadQueryFont(display, "16x32");
-    if (!font) font = XLoadQueryFont(display,
-        "-misc-fixed-medium-r-normal--32-*-*-*-*-*-*-*");
-    if (!font) font = XLoadQueryFont(display, "14x28");
-    if (!font) font = XLoadQueryFont(display,
-        "-misc-fixed-medium-r-normal--28-*-*-*-*-*-*-*");
-    if (!font) font = XLoadQueryFont(display, "12x24");
+    // if (!font) font = XLoadQueryFont(display,
+    //     "-misc-fixed-medium-r-normal--32-*-*-*-*-*-*-*");
+    // if (!font) font = XLoadQueryFont(display, "14x28");
+    // if (!font) font = XLoadQueryFont(display,
+    //     "-misc-fixed-medium-r-normal--28-*-*-*-*-*-*-*");
+    // if (!font) font = XLoadQueryFont(display, "12x24");
     if (!font) font = XLoadQueryFont(display,
         "-misc-fixed-medium-r-normal--24-*-*-*-*-*-*-*");
     if (!font) font = XLoadQueryFont(display, "10x20");
@@ -3131,6 +3137,8 @@ int main(int argc, char **argv) {
         XCloseDisplay(display);
         return 1;
     }
+
+
     XSetFont(display, gc, font->fid);
     XSetForeground(display, gc, color_text);
     if (!getcwd(initial_cwd, sizeof(initial_cwd))) {
@@ -3141,6 +3149,8 @@ int main(int argc, char **argv) {
         XCloseDisplay(display);
         return 1;
     }
+
+
     const char *home = getenv("HOME");
     if (home && snprintf(history_path, sizeof(history_path), "%s/.bash_history", home) >=
                     (int)sizeof(history_path)) history_path[0] = '\0';
@@ -3154,8 +3164,13 @@ int main(int argc, char **argv) {
         XCloseDisplay(display);
         return 1;
     }
+
     memset(shared_history, 0, sizeof(*shared_history));
-    if (sem_init(&shared_history->mutex, 1, 1) < 0) {
+    // second 1 means it semaphore is shared between process
+    // if 0 then it is shared betwneen threads
+
+    // 3rd 1 means only 1 process can aquire the lock
+    if (sem_init(&shared_history->mutex, 1, 1) < 0) { 
         fprintf(stderr, "terminator: cannot initialize shared history lock: %s\n", strerror(errno));
         munmap(shared_history, sizeof(*shared_history));
         XFreeFont(display, font);
@@ -3164,6 +3179,10 @@ int main(int argc, char **argv) {
         XCloseDisplay(display);
         return 1;
     }
+
+
+    //create a shared memory region
+    //job control, managing commands running inside the terminal
     shared_control = mmap(NULL, sizeof(*shared_control), PROT_READ | PROT_WRITE,
                           MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     if (shared_control == MAP_FAILED) {
